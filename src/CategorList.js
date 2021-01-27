@@ -3,17 +3,17 @@ import { ListGroup, ListGroupItem } from "reactstrap";
 
 export default class CategorList extends Component {
   state = {
-    categories: []
+    categories: [],
   };
 
   componentDidMount() {
     this.getCategories();
   }
 
-  getCategories = ()=>{
+  getCategories = () => {
     fetch("http://localhost:3000/categories")
-    .then(response=> response.json())
-    .then(data=> this.setState({ categories: data }));;
+      .then((response) => response.json())
+      .then((data) => this.setState({ categories: data }));
   };
 
   render() {
@@ -23,6 +23,11 @@ export default class CategorList extends Component {
         <ListGroup>
           {this.state.categories.map((category) => (
             <ListGroupItem
+              active={
+                category.categoryName === this.props.currentCategory
+                  ? true
+                  : false
+              }
               onClick={() => this.props.changeCategory(category)}
               key={category.id}
             >
@@ -30,7 +35,7 @@ export default class CategorList extends Component {
             </ListGroupItem>
           ))}
         </ListGroup>
-        <h4 className="mt-5">{this.props.currentCategory}</h4>
+        {/* <h4 className="mt-5">{this.props.currentCategory}</h4> */}
       </div>
     );
   }
